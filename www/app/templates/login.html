@@ -1,0 +1,19 @@
+<div>
+    <form ng-submit="tryConnect()">
+        <label class="item item-input">
+            <input type="text" ng-required="true" placeholder="MQTT Hostname"
+                   ng-model="loginData.host" />
+        </label>
+        <label class="item item-input">
+            <input type="number" ng-required="true" placeholder="MQTT Port"
+                   ng-model="loginData.port" value="18883" />
+        </label>
+        <label class="item item-input">
+            <input type="text" placeholder="MQTT user" ng-model="loginData.user" />
+        </label>
+        <label class="item item-input">
+            <input type="password" placeholder="MQTT password" ng-model="loginData.password" />
+        </label>
+        <input type="submit" value="Connect" />
+    </form>
+</div>

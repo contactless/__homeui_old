@@ -1,0 +1,11 @@
+<div ng-controller="DeviceController">
+    <ul>
+        <li ng-repeat="(name, device) in devices">
+            <span>{{name}}</span>
+            <ul>
+                <span>{{device.meta.name}}</span>
+                <span>{{device.meta}}</span>
+            </ul>
+        </li>
+    </ul>
+</div>
