@@ -5,7 +5,6 @@
   <title>Contactless control panel</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../bower_components/html5-boilerplate/css/normalize.css">
   <link rel="stylesheet" href="../bower_components/html5-boilerplate/css/main.css">
   <link rel="stylesheet" href="app.css">
   <script language="JavaScript" type="text/javascript" src="lib/mqttws31.js" ></script>
@@ -22,6 +21,6 @@
 </head>
 <body>
   <div id="header" class="menu" ng-controller="AppController"><a href="" ng-click="disconnect()">Disconnect</a></div>
-  <div ng-view></div>
+  <div class="main-view"ng-view></div>
 </body>
 </html>
