@@ -337,6 +337,19 @@ input[type="submit"]:active {
   background-color: #0000FF;
 }
 
+input[type="button"] {
+  padding: 0px 14px 0px 14px;
+  vertical-align: middle;
+}
+
+input[type="button"]:hover {
+  background-color: #0088cc;
+}
+
+input[type="button"]:active {
+  background-color: #0000FF;
+}
+
 .button{
   display: inline-block;
   padding: 8px 15px;

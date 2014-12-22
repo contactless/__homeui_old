@@ -9,8 +9,8 @@
         <div class="control-view">
             <div ng-repeat="(controlName, control) in device.controls">
                 <span ng-if="control.metaName">{{control.metaName}}</span>
-                <span ng-if="!control.metaName">{{controlName}}</span>
-                <span ng-if="control.metaType">{{control.metaType}}</span>
+                <input ng-if="control.metaType == 'pushbutton'"
+                       type="button" ng-value="controlName"/>
             </div>
         </div>
     </div>
