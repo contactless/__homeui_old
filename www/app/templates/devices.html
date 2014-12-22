@@ -1,9 +1,18 @@
 <div id="devicesContainer" class="view" ng-controller="DeviceController">
     <div class="card" ng-repeat="(name, device) in devices" on>
-        <span>{{name}}</span>
-        <ul>
-            <span>{{device.meta.name}}</span>
-            <span>{{device.meta}}</span>
-        </ul>
+        <div ng-if="device.metaName">
+            <h1 class="deviceName">{{device.metaName}}</h1>
+        </div>
+        <div ng-if="!device.metaName">
+            <h1 class="deviceName">{{name}}</h1>
+        </div>
+        <div class="control-view">
+            <div ng-repeat="(controlName, control) in device.controls">
+                <span ng-if="control.metaName">{{control.metaName}}</span>
+                <span ng-if="!control.metaName">{{controlName}}</span>
+                <span ng-if="control.metaType">{{control.metaType}}</span>
+            </div>
+        </div>
     </div>
+
 </div>

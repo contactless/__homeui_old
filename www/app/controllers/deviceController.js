@@ -52,12 +52,7 @@ deviceModule.controller('DeviceController', function($scope, $location, $rootSco
         fillEmptySpace:false
     };
 
-   // $interval(function() {
-   //     $("#devicesContainer div").wookmark(wookmarkOptions);
-   // }, 1200);
-
     MQTTClient.onMessage(function(message) {
-        console.log("In device callback");
         var pathItems = message.destinationName.split('/');
         if(pathItems[1] != "devices") {
             console.log("Message not about device, ignoring");
@@ -77,7 +72,7 @@ deviceModule.controller('DeviceController', function($scope, $location, $rootSco
         parseMessage(device, pathItems, message);
 
         $scope.$apply(function (){
-            $("#devicesContainer div").wookmark(wookmarkOptions);
+            $("#devicesContainer .card").wookmark(wookmarkOptions);
         });
 
 
@@ -86,15 +81,64 @@ deviceModule.controller('DeviceController', function($scope, $location, $rootSco
     function parseMessage(device, pathItems, message) {
         switch(pathItems[3]) {
             case "meta":
-                var parsedMeta = parseMeta(pathItems, message);
-                device.meta[parsedMeta.attributeName] = parsedMeta.value;
+                parseDeviceMeta(device, pathItems, message);
+                break;
+            case "controls":
+                parseControls(device, pathItems, message);
         }
     }
 
-    function parseMeta(pathItems, message) {
-        return {
-            attributeName: pathItems[4],
-            value: message.payloadString
-        };
+    function parseDeviceMeta(device, pathItems, message) {
+        var attributeName = pathItems[4], value = message.payloadString;
+
+        switch(attributeName) {
+            case "name":
+                device.metaName = value;
+                break;
+            case "room":
+                device.metaRoom = value;
+                break;
+            default:
+                device.meta[attributeName] = value;
+                break;
+        }
+    }
+
+    function parseControlsMeta(control, pathItems, message) {
+        var attributeName = pathItems[6], value = message.payloadString;
+        switch(attributeName) {
+            case "name":
+                control.metaName = value;
+                break;
+            case "type":
+                control.metaType = value;
+                break;
+            case "order":
+                control.metaOrder = value;
+                break;
+            default:
+                control.meta[attributeName] = value;
+                break;
+        }
+    }
+
+
+    function parseControls(device, pathItems, message) {
+        var controlName = pathItems[4];
+        var control;
+        if(device.controls[controlName] == null) {
+            // create new control
+            control = device.controls[controlName] = {name: controlName, meta: {}, metaType: "NONE"};
+        } else
+            control = device.controls[controlName];
+
+        switch(pathItems[5]) {
+            case "meta":
+                parseControlsMeta(control, pathItems, message);
+                break;
+            case null:
+                control.value = new DataView(message.payloadBytes).getInt8(0);
+        }
+
     }
 });
