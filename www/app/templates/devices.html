@@ -1,11 +1,9 @@
-<div ng-controller="DeviceController">
-    <ul>
-        <li ng-repeat="(name, device) in devices">
-            <span>{{name}}</span>
-            <ul>
-                <span>{{device.meta.name}}</span>
-                <span>{{device.meta}}</span>
-            </ul>
-        </li>
-    </ul>
+<div id="devicesContainer" class="view" ng-controller="DeviceController">
+    <div class="card" ng-repeat="(name, device) in devices" on>
+        <span>{{name}}</span>
+        <ul>
+            <span>{{device.meta.name}}</span>
+            <span>{{device.meta}}</span>
+        </ul>
+    </div>
 </div>

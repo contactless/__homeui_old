@@ -33,12 +33,28 @@ deviceModule.controller('AppController', function($scope, $location, MQTTClient)
     };
 });
 
-deviceModule.controller('DeviceController', function($scope, $location, $rootScope, MQTTClient) {
+deviceModule.controller('DeviceController', function($scope, $location, $rootScope, $interval, MQTTClient) {
     $scope.devices = {};
 
     $scope.change = function(device) {
 
     };
+
+    //$('#container').wookmark();
+
+    var wookmarkOptions = {
+        // Prepare layout options.
+        autoResize: true, // This will auto-update the layout when the browser window is resized.
+        container: $('#devicesContainer'), // Optional, used for some extra CSS styling
+        offset: 16, // Optional, the distance between grid items
+        outerOffset: 10, // Optional, the distance to the containers border
+        itemWidth: 420, // Optional, the width of a grid item
+        fillEmptySpace:false
+    };
+
+   // $interval(function() {
+   //     $("#devicesContainer div").wookmark(wookmarkOptions);
+   // }, 1200);
 
     MQTTClient.onMessage(function(message) {
         console.log("In device callback");
@@ -60,7 +76,11 @@ deviceModule.controller('DeviceController', function($scope, $location, $rootSco
 
         parseMessage(device, pathItems, message);
 
-        $scope.$apply();
+        $scope.$apply(function (){
+            $("#devicesContainer div").wookmark(wookmarkOptions);
+        });
+
+
     });
 
     function parseMessage(device, pathItems, message) {
