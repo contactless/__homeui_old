@@ -128,7 +128,8 @@ deviceModule.controller('DeviceController', function($scope, $location, $rootSco
         var control;
         if(device.controls[controlName] == null) {
             // create new control
-            control = device.controls[controlName] = {name: controlName, meta: {}, metaType: "NONE"};
+            control = device.controls[controlName] = {name: controlName, meta: {},
+                metaType: "NONE", value: 0};
         } else
             control = device.controls[controlName];
 
@@ -136,8 +137,8 @@ deviceModule.controller('DeviceController', function($scope, $location, $rootSco
             case "meta":
                 parseControlsMeta(control, pathItems, message);
                 break;
-            case null:
-                control.value = new DataView(message.payloadBytes).getInt8(0);
+            case undefined:
+                control.value = message.payloadBytes[0];
         }
 
     }
